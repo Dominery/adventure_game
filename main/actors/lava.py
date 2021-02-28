@@ -1,3 +1,4 @@
+from main.settings import Status
 from main.state import State
 from main.vec import Vec
 
@@ -24,7 +25,7 @@ class Lava:
         return "lava"
 
     def collide(self,state):
-        return State(state.level,state.actors,"lost")
+        return State(state.level,state.actors,Status.LIFE_DECREASE)
 
     def update(self,time,state,*args):
         new_pos = self.pos.plus(self.speed.times(time))
