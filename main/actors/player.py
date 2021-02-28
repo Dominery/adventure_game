@@ -23,6 +23,10 @@ class Player:
     def pos(self):
         return self._pos
 
+    @property
+    def speed(self):
+        return self._speed
+
     def update(self,time,state,keys):
         x_speed = 0
         if keys.ArrowLeft:

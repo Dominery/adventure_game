@@ -93,7 +93,6 @@ def run_level(level, Display):
             ending -= time
             return True
         else:
-            display.clear()
             arrow_keys.unregister()
             return False
 

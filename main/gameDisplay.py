@@ -1,30 +1,34 @@
 import math
+from time import time
 
 import pygame
 
-scale = 20
-images = {"lava": pygame.image.load("../src/lava.png"),
-          "coin": pygame.image.load("../src/coin.png"),
-          "wall": pygame.image.load("../src/wall.png")}
+from main.settings import scale, images, player_x_overlap, player_img
 
 
 class GameDisplay:
     def __init__(self, screen, level):
         self.screen = screen
         self.level = level
-        self.width = screen.get_width()
-        self.height = screen.get_height()
+        width = screen.get_width()
+        height = screen.get_height()
 
-        self.viewport = {"left": 0, "top": 0, "width": self.width / scale,
-                         "height": self.height / scale}
+        self.viewport = {"left": 0, "top": 0, "width": width / scale,
+                         "height": height / scale}
+        self.background = pygame.Rect(0, 0, width, height)
+        self.flip_player = False
 
-    def clear(self):
-        background = pygame.Rect(0,0,self.width,self.height)
-        self.screen.fill([0,0,0],background)
+    def clear_display(self, status):
+        if status == "won":
+            self.screen.fill([68, 191, 255], self.background)
+        elif status == "lost":
+            self.screen.fill([44, 136, 214], self.background)
+        else:
+            self.screen.fill([52, 166, 251], self.background)
 
     def sync_state(self, state):
         self.update_viewport(state)
-        self.clear()
+        self.clear_display(state.status)
         self.draw_background(state.level)
         self.draw_actors(state.actors)
         pygame.display.flip()
@@ -76,6 +80,19 @@ class GameDisplay:
                 img = pygame.transform.scale(images[actor.type], (width, height))
                 self.screen.blit(img, (x, y))
 
-    def draw_player(self, actor, x, y, width, height):
-        rect = pygame.Rect(x,y,width,height)
-        self.screen.fill([255,255,255],rect)
+    def draw_player(self, player, x, y, width, height):
+        width += player_x_overlap * 2
+        x -= player_x_overlap
+        if player.speed.x != 0:
+            self.flip_player = player.speed.x < 0
+
+        tile = 8
+        if player.speed.y != 0:
+            tile = 9
+        elif player.speed.x != 0:
+            tile = math.floor(time()*10) % 8
+
+        player_surf = player_img.subsurface(pygame.Rect(width * tile, 0, width, height)).copy()
+        if self.flip_player:
+            player_surf = pygame.transform.flip(player_surf, True, False)
+        self.screen.blit(player_surf, (x, y))
