@@ -4,7 +4,7 @@ import pygame
 
 from main.eventHandle import EventListener, trackKeys
 from main.level import Level
-from main.settings import Status
+from main.settings import Status, background_music
 from main.state import State
 
 
@@ -13,8 +13,11 @@ class GameEngine:
         pygame.init()
         self.screen = pygame.display.set_mode((640, 420))
         pygame.display.set_caption("adventure")
-        self.store_state = None
         self.store_time = 0
+        pygame.mixer.music.load(background_music)
+        pygame.mixer.music.set_volume(0.2)
+        pygame.mixer.music.play(-1)
+
 
     def run_game(self, plans, Display):
         level = 0
