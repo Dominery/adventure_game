@@ -7,7 +7,7 @@ from main.vec import Vec
 
 levelChars = {
     ".": "empty", "#": "wall", "+": "lava", "@": Player, "o": Coin,
-    "=": Lava, "|": Lava, "v": Lava
+    "=": Lava, "|": Lava, "v": Lava,"&":"store"
 }
 
 

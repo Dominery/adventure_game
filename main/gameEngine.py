@@ -13,11 +13,9 @@ class GameEngine:
         pygame.init()
         self.screen = pygame.display.set_mode((640, 420))
         pygame.display.set_caption("adventure")
-        self.store_time = 0
         pygame.mixer.music.load(background_music)
         pygame.mixer.music.set_volume(0.2)
         pygame.mixer.music.play(-1)
-
 
     def run_game(self, plans, Display):
         level = 0
@@ -31,6 +29,7 @@ class GameEngine:
     def _run_level(self, level, Display):
         display = Display(self.screen, level)
         state = State.start(level)
+        State.store(state)
         ending = 0.5
         running = True
 
@@ -51,21 +50,16 @@ class GameEngine:
             state = state.update(time_spec, arrow_keys)
             display.sync_state(state)
             if state.status == Status.PLAYING:
-                now = time.time()
-                if now - self.store_time > 2:
-                    self.store_state = state
-                    self.store_time = now
                 return True
             elif state.status == Status.EXIT:
                 return False
             elif state.status == Status.LIFE_DECREASE:
                 if ending > 0:
                     ending -= time_spec
-                    return True
                 else:
                     ending = 0.5
-                    state = self.store_state
-                    return True
+                    state = State.store_state
+                return True
             else:
                 arrow_keys.unregister()
                 return False

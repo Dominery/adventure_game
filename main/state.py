@@ -2,11 +2,16 @@ from main.settings import Status
 
 
 class State:
+    store_state = None
+
     def __init__(self, level, actors, status):
         self.level = level
         self.actors = actors
         self.status = status
-        self.store_state = None
+
+    @classmethod
+    def store(cls,state):
+        cls.store_state = state
 
     @classmethod
     def start(cls, level):
@@ -27,6 +32,9 @@ class State:
         player = new_state.player
         if self.level.touches(player.pos, player.size, "lava"):
             return State(self.level, actors, Status.LIFE_DECREASE)
+
+        if self.level.touches(player.pos, player.size, "store"):
+            self.store(self)
 
         for actor in actors:
             if actor != player and overlap(actor, player):
