@@ -14,8 +14,9 @@ class GameEngine:
         self.screen = pygame.display.set_mode((640, 420))
         pygame.display.set_caption("adventure")
         self.store_state = None
+        self.store_time = 0
 
-    def run_game(self,plans,Display):
+    def run_game(self, plans, Display):
         level = 0
         while level < len(plans):
             status = self._run_level(Level(plans[level]), Display)
@@ -24,7 +25,7 @@ class GameEngine:
             if status == Status.EXIT:
                 return pygame.quit()
 
-    def _run_level(self,level,Display):
+    def _run_level(self, level, Display):
         display = Display(self.screen, level)
         state = State.start(level)
         ending = 0.5
@@ -33,24 +34,35 @@ class GameEngine:
         event_listener = EventListener()
         arrow_keys = trackKeys(event_listener, ["ArrowLeft", "ArrowRight", "ArrowUp"])
 
-        def game_exit():
+        def game_exit(*args):
             state.status = Status.EXIT
 
-        event_listener.add_event(pygame.QUIT, lambda x: game_exit())
+        event_listener.add_event(pygame.QUIT, game_exit)
 
-        def frame(time):
+        def frame(time_spec):
             nonlocal ending, state
             if not running:
                 return True
             for event in pygame.event.get():
                 event_listener.run(event)
-            state = state.update(time, arrow_keys)
+            state = state.update(time_spec, arrow_keys)
             display.sync_state(state)
             if state.status == Status.PLAYING:
+                now = time.time()
+                if now - self.store_time > 2:
+                    self.store_state = state
+                    self.store_time = now
                 return True
-            elif ending > 0:
-                ending -= time
-                return True
+            elif state.status == Status.EXIT:
+                return False
+            elif state.status == Status.LIFE_DECREASE:
+                if ending > 0:
+                    ending -= time_spec
+                    return True
+                else:
+                    ending = 0.5
+                    state = self.store_state
+                    return True
             else:
                 arrow_keys.unregister()
                 return False
@@ -58,7 +70,7 @@ class GameEngine:
         self._run_animation(frame)
         return state.status
 
-    def _run_animation(self,frame_func):
+    def _run_animation(self, frame_func):
         last_time = None
         running = True
         clock = pygame.time.Clock()

@@ -16,3 +16,4 @@ class Status(Enum):
     EXIT = "exit"
     LOST = "lost"
     WON = "won"
+    LIFE_DECREASE = "life_decrease"

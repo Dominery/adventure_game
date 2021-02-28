@@ -6,6 +6,7 @@ class State:
         self.level = level
         self.actors = actors
         self.status = status
+        self.store_state = None
 
     @classmethod
     def start(cls, level):
@@ -25,7 +26,7 @@ class State:
 
         player = new_state.player
         if self.level.touches(player.pos, player.size, "lava"):
-            return State(self.level, actors, Status.LOST)
+            return State(self.level, actors, Status.LIFE_DECREASE)
 
         for actor in actors:
             if actor != player and overlap(actor, player):
