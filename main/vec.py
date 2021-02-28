@@ -8,3 +8,6 @@ class Vec:
     
     def times(self,factor):
         return Vec(self.x*factor,self.y*factor)
+
+    def __repr__(self):
+        return self.__class__.__name__+f'<{self.x},{self.y}>'

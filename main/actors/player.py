@@ -13,7 +13,7 @@ class Player:
 
     @classmethod
     def create(cls,pos,char=None):
-        return cls(pos.plus(Vec(0,0.5)),Vec(0,0))
+        return cls(pos.plus(Vec(0,-0.5)),Vec(0,0))
 
     @property
     def type(self):

@@ -8,7 +8,7 @@ from main.vec import Vec
 class Coin:
     size = Vec(0.6, 0.6)
     wobble_speed = 8
-    wobble_dist = 0.07
+    wobble_dist = 0.1
 
     def __init__(self, pos, base_pos, wobble):
         self.pos = pos
