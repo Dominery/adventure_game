@@ -6,6 +6,7 @@ from main.gameDisplay import GameDisplay
 from main.game_levels import game_level
 from main.keysContainer import KeysContainer
 from main.level import Level
+from main.settings import Status
 from main.state import State
 
 
@@ -75,7 +76,7 @@ def run_level(level, Display):
     arrow_keys = trackKeys(event_listener, ["ArrowLeft", "ArrowRight", "ArrowUp"])
 
     def game_exit():
-        state.status = "exit"
+        state.status = Status.EXIT
 
     event_listener.add_event(pygame.QUIT, lambda x: game_exit())
 
@@ -87,7 +88,7 @@ def run_level(level, Display):
             event_listener.run(event)
         state = state.update(time, arrow_keys)
         display.sync_state(state)
-        if state.status == "playing":
+        if state.status == Status.PLAYING:
             return True
         elif ending > 0:
             ending -= time
@@ -104,9 +105,9 @@ def runGame(plans, Display):
     level = 0
     while level < len(plans):
         status = run_level(Level(plans[level]), Display)
-        if status == "won":
+        if status == Status.WON:
             level += 1
-        if status == "exit":
+        if status == Status.EXIT:
             break
     pygame.quit()
 

@@ -3,7 +3,7 @@ from time import time
 
 import pygame
 
-from main.settings import scale, images, player_x_overlap, player_img
+from main.settings import scale, images, player_x_overlap, player_img, Status
 
 
 class GameDisplay:
@@ -19,9 +19,9 @@ class GameDisplay:
         self.flip_player = False
 
     def clear_display(self, status):
-        if status == "won":
+        if status == Status.WON:
             self.screen.fill([68, 191, 255], self.background)
-        elif status == "lost":
+        elif status == Status.LOST:
             self.screen.fill([44, 136, 214], self.background)
         else:
             self.screen.fill([52, 166, 251], self.background)

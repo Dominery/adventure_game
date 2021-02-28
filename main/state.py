@@ -1,3 +1,6 @@
+from main.settings import Status
+
+
 class State:
     def __init__(self, level, actors, status):
         self.level = level
@@ -6,7 +9,7 @@ class State:
 
     @classmethod
     def start(cls, level):
-        return cls(level, level.start_actors, "playing")
+        return cls(level, level.start_actors, Status.PLAYING)
 
     @property
     def player(self):
@@ -17,12 +20,12 @@ class State:
         actors = list(map(lambda actor: actor.update(time, self, keys), self.actors))
         new_state = State(self.level, actors, self.status)
 
-        if new_state.status != "playing":
+        if new_state.status != Status.PLAYING:
             return new_state
 
         player = new_state.player
         if self.level.touches(player.pos, player.size, "lava"):
-            return State(self.level, actors, "lost")
+            return State(self.level, actors, Status.LOST)
 
         for actor in actors:
             if actor != player and overlap(actor, player):

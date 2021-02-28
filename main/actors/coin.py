@@ -1,6 +1,7 @@
 import math
 from random import random
 
+from main.settings import Status
 from main.state import State
 from main.vec import Vec
 
@@ -28,7 +29,7 @@ class Coin:
         untouched_char = list(filter(lambda x: x != self, state.actors))
         status = state.status
         if not any((x.type == "coin" for x in untouched_char)):
-            status = "won"
+            status = Status.WON
         return State(state.level, untouched_char, status)
 
     def update(self,time,*args):
