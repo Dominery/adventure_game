@@ -29,3 +29,4 @@ class Status(Enum):
 background = pygame.image.load("../src/imag/background.jpg")
 young_player = pygame.image.load("../src/imag/young_player.png")
 icon = pygame.image.load("../src/imag/icon.png")
+font = "SimHei"

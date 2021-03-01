@@ -9,13 +9,8 @@ from main.state import State
 
 
 class GameEngine:
-    def __init__(self):
-        pygame.init()
-        self.screen = pygame.display.set_mode((640, 420))
-        pygame.display.set_caption("adventure")
-        pygame.mixer.music.load(background_music)
-        pygame.mixer.music.set_volume(0.2)
-        pygame.mixer.music.play(-1)
+    def __init__(self,screen):
+        self.screen = screen
 
     def run_game(self, plans, Display, level_num=0):
         while level_num < len(plans):
