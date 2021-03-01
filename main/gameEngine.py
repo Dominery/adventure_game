@@ -17,18 +17,16 @@ class GameEngine:
         pygame.mixer.music.set_volume(0.2)
         pygame.mixer.music.play(-1)
 
-    def run_game(self, plans, Display):
-        level = 0
-        while level < len(plans):
-            status = self._run_level(Level(plans[level]), Display)
+    def run_game(self, plans, Display, level_num=0):
+        while level_num < len(plans):
+            level = Level(plans[level_num])
+            status = self._run_level(State.start(level),Display(self.screen,level))
             if status == Status.WON:
-                level += 1
+                level_num += 1
             if status == Status.EXIT:
                 return pygame.quit()
 
-    def _run_level(self, level, Display):
-        display = Display(self.screen, level)
-        state = State.start(level)
+    def _run_level(self, state, display):
         State.store(state)
         ending = 0.5
         running = True
