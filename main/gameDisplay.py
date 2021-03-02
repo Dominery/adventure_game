@@ -3,7 +3,8 @@ from time import time
 
 import pygame
 
-from main.settings import scale, images, player_x_overlap, player_img, Status
+from main.settings import scale, background_element_images, player_x_overlap, player_img, Status
+from main.state import State
 
 
 class GameDisplay:
@@ -64,8 +65,10 @@ class GameDisplay:
                     continue
                 screen_x = (x - left) * scale
                 screen_y = (y - top) * scale
-                img = pygame.transform.scale(images[title], (scale, scale))
+                img = pygame.transform.scale(background_element_images[title], (scale, scale))
                 self.screen.blit(img, (screen_x, screen_y))
+
+        self.draw_player_health(scale)
 
     def draw_actors(self, actors):
         for actor in actors:
@@ -77,7 +80,7 @@ class GameDisplay:
             if actor.type == "player":
                 self.draw_player(actor, x, y, width, height)
             else:
-                img = pygame.transform.scale(images[actor.type], (width, height))
+                img = pygame.transform.scale(background_element_images[actor.type], (width, height))
                 self.screen.blit(img, (x, y))
 
     def draw_player(self, player, x, y, width, height):
@@ -92,7 +95,12 @@ class GameDisplay:
         elif player.speed.x != 0:
             tile = math.floor(time()*10) % 8
 
-        player_surf = player_img.subsurface(pygame.Rect(width * tile, 0, width, height)).copy()
+        player_surf = player_img[player.type].subsurface(pygame.Rect(width * tile, 0, width, height)).copy()
         if self.flip_player:
             player_surf = pygame.transform.flip(player_surf, True, False)
         self.screen.blit(player_surf, (x, y))
+
+    def draw_player_health(self,y):
+        img = pygame.transform.scale(player_img["health"],(scale,scale))
+        for i in range(State.player_life):
+            self.screen.blit(img, (self.screen.get_width() - scale * (i + 1),y))

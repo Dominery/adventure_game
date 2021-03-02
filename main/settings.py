@@ -4,12 +4,13 @@ import pygame
 
 # display paras
 scale = 20
-images = {"lava": pygame.image.load("../src/imag/lava.png"),
-          "coin": pygame.image.load("../src/imag/coin.png"),
-          "wall": pygame.image.load("../src/imag/wall.png"),
-          "store": pygame.image.load("../src/imag/store.png")}
+background_element_images = {"lava": pygame.image.load("../src/imag/lava.png"),
+                             "coin": pygame.image.load("../src/imag/coin.png"),
+                             "wall": pygame.image.load("../src/imag/wall.png"),
+                             "store": pygame.image.load("../src/imag/store.png")}
 
-player_img = pygame.image.load("../src/imag/player.png")
+player_img = {"player":pygame.image.load("../src/imag/player.png"),
+              "health":pygame.image.load("../src/imag/heart.png")}
 
 player_x_overlap = 4
 

@@ -25,6 +25,7 @@ class Lava:
         return "lava"
 
     def collide(self,state):
+        state.decrease_player_life()
         return State(state.level,state.actors,Status.LIFE_DECREASE)
 
     def update(self,time,state,*args):

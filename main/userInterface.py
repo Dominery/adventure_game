@@ -21,7 +21,7 @@ class UserInterface:
         self.buttons = [Button(45, (255, 255, 255), (0, 0, 255), i) for i in messages]
         height_length = self.screen.get_height() / 2 / len(messages)
         self.buttons_draw_func = [
-            self.buttons[i].set_up((self.screen.get_width() / 2,self.screen.get_height() / 2 + height_length * i ),
+            self.buttons[i].set_up((self.screen.get_width() / 2, self.screen.get_height() / 2 + height_length * i),
                                    self.screen) for i in range(len(self.buttons))]
 
     def _draw_background(self):
@@ -47,23 +47,32 @@ class UserInterface:
 
     def run(self):
         event_listener = EventListener()
+        start_level = 0
+        running = True
 
         def button_touch_handler(*args):
             for button in self.buttons:
                 button.change_color()
 
         def button_down_handler(event):
+            nonlocal start_level
             if event.button != 1:
                 return
             button = filter(lambda x: x.touch(), self.buttons)
             if button and next(button).msg == "Start":
                 pygame.mixer.music.play(-1)
-                return GameEngine(self.screen).run_game(game_level, GameDisplay)
+                game_engine.run_game(game_level, GameDisplay, start_level)
+
+        def quit_handler(event):
+            nonlocal running
+            running = False
 
         event_listener.add_event(pygame.MOUSEMOTION, button_touch_handler)
         event_listener.add_event(pygame.MOUSEBUTTONDOWN, button_down_handler)
+        event_listener.add_event(pygame.QUIT, quit_handler)
 
-        while True:
+        game_engine = GameEngine(self.screen)
+        while running:
             pygame.time.Clock().tick(30)
             for event in pygame.event.get():
                 event_listener.run(event)

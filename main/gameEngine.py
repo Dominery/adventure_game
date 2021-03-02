@@ -4,22 +4,24 @@ import pygame
 
 from main.eventHandle import EventListener, trackKeys
 from main.level import Level
-from main.settings import Status, background_music
+from main.settings import Status
 from main.state import State
 
 
 class GameEngine:
-    def __init__(self,screen):
+    def __init__(self, screen):
         self.screen = screen
 
     def run_game(self, plans, Display, level_num=0):
+        State.reset_player_life()
         while level_num < len(plans):
             level = Level(plans[level_num])
-            status = self._run_level(State.start(level),Display(self.screen,level))
+            status = self._run_level(State.start(level), Display(self.screen, level))
             if status == Status.WON:
                 level_num += 1
-            if status == Status.EXIT:
-                return pygame.quit()
+            if status == Status.EXIT or status == Status.LOST:
+                break
+        return State.store_state
 
     def _run_level(self, state, display):
         State.store(state)
@@ -44,7 +46,7 @@ class GameEngine:
             display.sync_state(state)
             if state.status == Status.PLAYING:
                 return True
-            elif state.status == Status.EXIT:
+            elif state.status == Status.EXIT or state.status == Status.LOST:
                 return False
             elif state.status == Status.LIFE_DECREASE:
                 if ending > 0:
