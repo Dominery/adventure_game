@@ -3,7 +3,7 @@ from random import random
 
 from main.settings import Status
 from main.state import State
-from main.vec import Vec
+from main.component.vec import Vec
 
 
 class Coin:

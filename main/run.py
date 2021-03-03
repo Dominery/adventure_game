@@ -1,6 +1,4 @@
-from main.gameDisplay import GameDisplay
-from main.gameEngine import GameEngine
-from main.game_levels import game_level
+from main.userInterface import UserInterface
 
 if __name__ == '__main__':
-    GameEngine().run_game(game_level,GameDisplay)
+    UserInterface().run()

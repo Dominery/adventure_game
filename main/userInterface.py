@@ -1,9 +1,9 @@
 import pygame
 
-from main.button import Button
-from main.eventHandle import EventListener
-from main.gameDisplay import GameDisplay
-from main.gameEngine import GameEngine
+from main.component.button import Button
+from main.component.eventHandle import EventListener
+from main.process.gameDisplay import GameDisplay
+from main.process.gameEngine import GameEngine
 from main.game_levels import game_level
 from main.settings import background_music, background, young_player, icon
 
@@ -79,5 +79,3 @@ class UserInterface:
             self.draw()
             pygame.display.flip()
 
-
-UserInterface().run()

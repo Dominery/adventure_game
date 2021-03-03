@@ -2,8 +2,8 @@ import time
 
 import pygame
 
-from main.eventHandle import EventListener, trackKeys
-from main.level import Level
+from main.component.eventHandle import EventListener, trackKeys
+from main.state.level import Level
 from main.settings import Status
 from main.state import State
 

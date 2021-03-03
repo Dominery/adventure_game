@@ -1,7 +1,7 @@
 import unittest
 
 from main.actors.player import Player
-from main.level import Level
+from main.state.level import Level
 from main.state import State
 
 
