@@ -1,7 +1,7 @@
 import pygame
 
 
-from main.component.keysContainer import KeysContainer
+from main.model.keysContainer import KeysContainer
 
 
 class EventListener:

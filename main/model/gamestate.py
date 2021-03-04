@@ -1,7 +1,7 @@
 from main.settings import Status
 
 
-class State:
+class GameState:
     store_state = None
     player_life = 3
 
@@ -33,10 +33,10 @@ class State:
 
     def update(self, time, keys):
         actors = list(map(lambda actor: actor.update(time, self, keys), self.actors))
-        new_state = State(self.level, actors, self.status)
+        new_state = GameState(self.level, actors, self.status)
 
         if self.player_life <= 0:
-            return State(self.level,actors,Status.LOST)
+            return GameState(self.level, actors, Status.LOST)
 
         if new_state.status != Status.PLAYING:
             return new_state
@@ -44,7 +44,7 @@ class State:
         player = new_state.player
         if self.level.touches(player.pos, player.size, "lava"):
             self.decrease_player_life()
-            return State(self.level, actors, Status.LIFE_DECREASE)
+            return GameState(self.level, actors, Status.LIFE_DECREASE)
 
         if self.level.touches(player.pos, player.size, "store"):
             self.store(self)

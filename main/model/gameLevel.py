@@ -1,9 +1,9 @@
 import math
 
-from main.actors.coin import Coin
-from main.actors.lava import Lava
-from main.actors.player import Player
-from main.component.vec import Vec
+from main.model.actors.coin import Coin
+from main.model.actors.lava import Lava
+from main.model.actors.player import Player
+from main.model.vec import Vec
 
 levelChars = {
     ".": "empty", "#": "wall", "+": "lava", "@": Player, "o": Coin,

@@ -1,7 +1,7 @@
 import unittest
 
-from main.state.level import Level
-from main.component.vec import Vec
+from main.model.gameLevel import Level
+from main.model.vec import Vec
 
 
 class TestLevel(unittest.TestCase):

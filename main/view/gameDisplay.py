@@ -4,7 +4,7 @@ from time import time
 import pygame
 
 from main.settings import scale, background_element_images, player_x_overlap, player_img, Status
-from main.state import State
+from main.model.gamestate import GameState
 
 
 class GameDisplay:
@@ -102,5 +102,5 @@ class GameDisplay:
 
     def draw_player_health(self,y):
         img = pygame.transform.scale(player_img["health"],(scale,scale))
-        for i in range(State.player_life):
+        for i in range(GameState.player_life):
             self.screen.blit(img, (self.screen.get_width() - scale * (i + 1),y))

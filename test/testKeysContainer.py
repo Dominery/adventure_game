@@ -1,6 +1,6 @@
 import unittest
 
-from main.component.keysContainer import KeysContainer
+from main.model.keysContainer import KeysContainer
 
 
 class KeysContainerTest(unittest.TestCase):

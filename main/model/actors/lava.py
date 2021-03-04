@@ -1,6 +1,6 @@
 from main.settings import Status
-from main.state import State
-from main.component.vec import Vec
+from main.model.gamestate import GameState
+from main.model.vec import Vec
 
 
 class Lava:
@@ -26,7 +26,7 @@ class Lava:
 
     def collide(self,state):
         state.decrease_player_life()
-        return State(state.level,state.actors,Status.LIFE_DECREASE)
+        return GameState(state.level, state.actors, Status.LIFE_DECREASE)
 
     def update(self,time,state,*args):
         new_pos = self.pos.plus(self.speed.times(time))

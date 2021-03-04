@@ -2,8 +2,8 @@ import math
 from random import random
 
 from main.settings import Status
-from main.state import State
-from main.component.vec import Vec
+from main.model.gamestate import GameState
+from main.model.vec import Vec
 
 
 class Coin:
@@ -30,7 +30,7 @@ class Coin:
         status = state.status
         if not any((x.type == "coin" for x in untouched_char)):
             status = Status.WON
-        return State(state.level, untouched_char, status)
+        return GameState(state.level, untouched_char, status)
 
     def update(self,time,*args):
         wobble = self.wobble + time*self.wobble_speed

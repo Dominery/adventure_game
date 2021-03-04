@@ -1,10 +1,10 @@
 import pygame
 
-from main.component.button import Button
-from main.component.eventHandle import EventListener
-from main.process.gameDisplay import GameDisplay
-from main.process.gameEngine import GameEngine
-from main.game_levels import game_level
+from main.model.button import Button
+from main.controller.eventHandle import EventListener
+from main.view.gameDisplay import GameDisplay
+from main.controller.gameEngine import GameEngine
+from main.model.game_levels import game_level
 from main.settings import background_music, background, young_player, icon
 
 

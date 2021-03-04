@@ -2,10 +2,10 @@ import time
 
 import pygame
 
-from main.component.eventHandle import EventListener, trackKeys
-from main.state.level import Level
+from main.controller.eventHandle import EventListener, trackKeys
+from main.model.gameLevel import Level
 from main.settings import Status
-from main.state import State
+from main.model.gamestate import GameState
 
 
 class GameEngine:
@@ -13,18 +13,18 @@ class GameEngine:
         self.screen = screen
 
     def run_game(self, plans, Display, level_num=0):
-        State.reset_player_life()
+        GameState.reset_player_life()
         while level_num < len(plans):
             level = Level(plans[level_num])
-            status = self._run_level(State.start(level), Display(self.screen, level))
+            status = self._run_level(GameState.start(level), Display(self.screen, level))
             if status == Status.WON:
                 level_num += 1
             if status == Status.EXIT or status == Status.LOST:
                 break
-        return State.store_state
+        return GameState.store_state
 
     def _run_level(self, state, display):
-        State.store(state)
+        state.store(state)
         ending = 0.5
         running = True
 
@@ -53,7 +53,7 @@ class GameEngine:
                     ending -= time_spec
                 else:
                     ending = 0.5
-                    state = State.store_state
+                    state = state.store_state
                 return True
             else:
                 arrow_keys.unregister()

@@ -1,7 +1,7 @@
 import unittest
 
-from main.actors.player import Player
-from main.state.level import Level
+from main.model.actors.player import Player
+from main.model.gameLevel import Level
 from main.state import State
 
 

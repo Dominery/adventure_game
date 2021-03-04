@@ -1,4 +1,4 @@
-from main.component.vec import Vec
+from main.model.vec import Vec
 
 
 class Player:
